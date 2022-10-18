@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+  metadata: myapp-argo-apps
+  namespace: argocd
+spec:
+  project: default
+
+  source: 
+    repoURL: https://iteragit.iteratec.de/tessa.ruckstuhl/argocd-sc.git
+    targetRevision: HEAD
+    path: apps
+  destination: 
+    server: https://kubernetes.default.svc
+    namespace: myapp
+
+  syncPolicy:
+    syncOptions: 
+    - CreateNamespace=true
+    
+    automated:
+      selfHeal: true
+      prune: true
