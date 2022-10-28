@@ -8,6 +8,6 @@ applications:
   - name: root
     path: apps/
     namespace: default 
-  - name: mynginx
+  - name: tessa-mynginx
     path: nginx
     namespace: default

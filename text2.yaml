@@ -23,32 +23,6 @@ spec:
     syncOptions:
       - CreateNamespace=true
 ---
-# Source: root/templates/prometheus.yaml
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: prometheus
-  namespace: default
-  finalizers:
-  - resources-finalizer.argocd.argoproj.io
-spec:
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: default
-  project: default
-  source:
-    chart: prometheus
-    helm:
-      values: |
-        pushgateway:
-          enabled: false
-    repoURL: https://prometheus-community.github.io/helm-charts
-    targetRevision: 15.6.0
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
----
 # Source: root/templates/root.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: Application
@@ -88,7 +62,7 @@ metadata:
 spec:
   project: default
   source:
-    path: /nginx
+    path: nginx
     repoURL: https://github.com/tessaRuckstuhl/ArgoCD-Playground.git
     targetRevision: HEAD
   destination:
