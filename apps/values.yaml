@@ -4,3 +4,10 @@ spec:
   source:
     repoURL: https://github.com/tessaRuckstuhl/ArgoCD-Playground.git
     targetRevision: HEAD
+applications:
+  - name: root
+    path: apps/
+    namespace: default 
+  - name: mynginx
+    path: nginx
+    namespace: default
