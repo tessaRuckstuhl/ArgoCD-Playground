@@ -24,3 +24,14 @@ Default Username is admin.
 kubectl get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
 
 ```
+
+# HELM
+
+```bash
+helm template apps/ | kubectl apply -f -   
+```
+
+
+```bash
+helm template apps/ | > preview.yaml   
+```
