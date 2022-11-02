@@ -1,0 +1,477 @@
+---
+# Source: frost-server/templates/secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: release-name-frost-server
+  labels:
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/instance: release-name
+    helm.sh/chart: frost-server-2.0.3
+    app: frost-server
+data:
+  db.username: c2Vuc29ydGhpbmdz
+  db.password: bm93eW91Y2FuY2hhbmdlaXQ=
+---
+# Source: frost-server/templates/bus-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: release-name-frost-server-bus
+  labels:
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/instance: release-name
+    helm.sh/chart: frost-server-2.0.3
+    app: frost-server
+    component: bus
+spec:
+  selector:
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/instance: release-name
+    helm.sh/chart: frost-server-2.0.3
+    app: frost-server
+    component: bus
+  ports:
+    - name: mqtt
+      port: 1883
+      targetPort: mqtt
+---
+# Source: frost-server/templates/db-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: release-name-frost-server-db
+  labels:
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/instance: release-name
+    helm.sh/chart: frost-server-2.0.3
+    app: frost-server
+    component: db
+spec:
+  selector:
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/instance: release-name
+    helm.sh/chart: frost-server-2.0.3
+    app: frost-server
+    component: db
+  ports:
+    - name: postgresql
+      port: 5432
+      targetPort: postgresql
+---
+# Source: frost-server/templates/http-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: release-name-frost-server-http
+  labels:
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/instance: release-name
+    helm.sh/chart: frost-server-2.0.3
+    app: frost-server
+    component: http
+spec:
+  selector:
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/instance: release-name
+    helm.sh/chart: frost-server-2.0.3
+    app: frost-server
+    component: http
+  ports:
+    - name: http
+      port: 80
+      targetPort: tomcat
+---
+# Source: frost-server/templates/mqtt-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: release-name-frost-server-mqtt
+  labels:
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/instance: release-name
+    helm.sh/chart: frost-server-2.0.3
+    app: frost-server
+    component: mqtt
+spec:
+  selector:
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/instance: release-name
+    helm.sh/chart: frost-server-2.0.3
+    app: frost-server
+    component: mqtt
+  type: NodePort
+  ports:
+    - name: mqtt
+      port: 1883
+      nodePort: 
+      targetPort: mqtt
+    - name: websocket
+      port: 9876
+      nodePort: 
+      targetPort: websocket
+  # MQTT server stores the subscriptions and the client should connect to the same server after the connection is lost
+  sessionAffinity: ClientIP
+  sessionAffinityConfig:
+    clientIP:
+      timeoutSeconds: 10800
+---
+# Source: frost-server/templates/bus-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: release-name-frost-server-bus
+  labels:
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/instance: release-name
+    helm.sh/chart: frost-server-2.0.3
+    app: frost-server
+    component: bus
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/instance: release-name
+      app: frost-server
+      component: bus
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/instance: release-name
+        helm.sh/chart: frost-server-2.0.3
+        app: frost-server
+        component: bus
+    spec:
+      containers:
+        - name: release-name-frost-server-bus
+          image: "docker.io/eclipse-mosquitto:1.4.12"
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - name: mqtt
+              containerPort: 1883
+---
+# Source: frost-server/templates/db-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: release-name-frost-server-db
+  labels:
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/instance: release-name
+    helm.sh/chart: frost-server-2.0.3
+    app: frost-server
+    component: db
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/instance: release-name
+      app: frost-server
+      component: db
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/instance: release-name
+        helm.sh/chart: frost-server-2.0.3
+        app: frost-server
+        component: db
+    spec:
+      containers:
+        - name: release-name-frost-server-db
+          image: "docker.io/postgis/postgis:11-2.5-alpine"
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - name: postgresql
+              containerPort: 5432
+          env:
+            - name: POSTGRES_DB
+              value: sensorthings
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: release-name-frost-server
+                  key: db.username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: release-name-frost-server
+                  key: db.password
+---
+# Source: frost-server/templates/http-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: release-name-frost-server-http
+  labels:
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/instance: release-name
+    helm.sh/chart: frost-server-2.0.3
+    app: frost-server
+    component: http
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/instance: release-name
+      app: frost-server
+      component: http
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/instance: release-name
+        helm.sh/chart: frost-server-2.0.3
+        app: frost-server
+        component: http
+    spec:
+      containers:
+        - name: release-name-frost-server-http
+          image: "docker.io/fraunhoferiosb/frost-server-http:2.0.3"
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - name: tomcat
+              containerPort: 8080
+          resources:
+            requests:
+              cpu: 500m
+              memory: 1Gi
+          env:
+            # Internal properties
+            - name: ApiVersion
+              value: "v1.0"
+            - name: serviceRootUrl
+              value: "http://frost-server"
+            - name: enableActuation
+              value: "false"
+
+            # HTTP related properties
+            - name: defaultCount
+              value: "false"
+            - name: defaultTop
+              value: "100"
+            - name: maxTop
+              value: "1000"
+            - name: maxDataSize
+              value: "25000000"
+            - name: useAbsoluteNavigationLinks
+              value: "true"
+            - name: http_cors_enable
+              value: "false"
+
+            # Messages bus related properties
+            - name: bus_mqttBroker
+              value: "tcp://release-name-frost-server-bus:1883"
+            - name: bus_busImplementationClass
+              value: "de.fraunhofer.iosb.ilt.sta.messagebus.MqttMessageBus"
+            - name: bus_topicName
+              value: "FROST-Bus"
+            - name: bus_qosLevel
+              value: "2"
+            - name: bus_sendWorkerPoolSize
+              value: "10"
+            - name: bus_sendQueueSize
+              value: "100"
+            - name: bus_recvWorkerPoolSize
+              value: "10"
+            - name: bus_recvQueueSize
+              value: "100"
+            - name: bus_maxInFlight
+              value: "50"
+            
+
+            # Persistence related properties
+            - name: persistence_db_jndi_datasource
+              value: ""
+            - name: persistence_db_driver
+              value: "org.postgresql.Driver"
+            - name: persistence_db_url
+              value: "jdbc:postgresql://release-name-frost-server-db:5432/sensorthings"
+            - name: persistence_persistenceManagerImplementationClass
+              value: "de.fraunhofer.iosb.ilt.sta.persistence.postgres.longid.PostgresPersistenceManagerLong"
+            - name: persistence_idGenerationMode
+              value: "ServerGeneratedOnly"
+            - name: persistence_autoUpdateDatabase
+              value: "true"
+            - name: persistence_alwaysOrderbyId
+              value: "false"
+            - name: persistence_db_conn_max
+              value: "10"
+            - name: persistence_db_conn_idle_max
+              value: "10"
+            - name: persistence_db_conn_idle_min
+              value: "10"
+            - name: persistence_db_username
+              valueFrom:
+                secretKeyRef:
+                  name: release-name-frost-server
+                  key: db.username
+            - name: persistence_db_password
+              valueFrom:
+                secretKeyRef:
+                  name: release-name-frost-server
+                  key: db.password
+---
+# Source: frost-server/templates/mqtt-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: release-name-frost-server-mqtt
+  labels:
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/instance: release-name
+    helm.sh/chart: frost-server-2.0.3
+    app: frost-server
+    component: mqtt
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/managed-by: Helm
+      app.kubernetes.io/instance: release-name
+      app: frost-server
+      component: mqtt
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/instance: release-name
+        helm.sh/chart: frost-server-2.0.3
+        app: frost-server
+        component: mqtt
+    spec:
+      containers:
+        - name: release-name-frost-server-mqtt
+          image: "docker.io/fraunhoferiosb/frost-server-mqtt:2.0.3"
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - name: mqtt
+              containerPort: 1883
+            - name: websocket
+              containerPort: 9876
+          env:
+            # Internal properties
+            - name: ApiVersion
+              value: "v1.0"
+            - name: serviceRootUrl
+              value: "http://frost-server"
+            - name: enableActuation
+              value: "false"
+
+            # HTTP related properties
+            - name: defaultCount
+              value: "false"
+            - name: defaultTop
+              value: "100"
+            - name: maxTop
+              value: "1000"
+            - name: maxDataSize
+              value: "25000000"
+            - name: useAbsoluteNavigationLinks
+              value: "true"
+
+            # MQTT related properties
+            - name: mqtt_mqttServerImplementationClass
+              value: "de.fraunhofer.iosb.ilt.sensorthingsserver.mqtt.moquette.MoquetteMqttServer"
+            - name: mqtt_Enabled
+              value: "true"
+            - name: mqtt_Port
+              value: "1883"
+            - name: mqtt_Host
+              value: "0.0.0.0"
+            - name: mqtt_internalHost
+              value: "localhost"
+            - name: mqtt_WebsocketPort
+              value: "9876"
+            - name: mqtt_WaitForEnter
+              value: "false"
+            - name: mqtt_QoS
+              value: "2"
+            - name: mqtt_SubscribeMessageQueueSize
+              value: "100"
+            - name: mqtt_SubscribeThreadPoolSize
+              value: "10"
+            - name: mqtt_CreateMessageQueueSize
+              value: "100"
+            - name: mqtt_CreateThreadPoolSize
+              value: "10"
+            - name: mqtt_maxInFlight
+              value: "50"
+
+            # Messages bus related properties
+            - name: bus_mqttBroker
+              value: "tcp://release-name-frost-server-bus:1883"
+            - name: bus_busImplementationClass
+              value: "de.fraunhofer.iosb.ilt.sta.messagebus.MqttMessageBus"
+            - name: bus_topicName
+              value: "FROST-Bus"
+            - name: bus_qosLevel
+              value: "2"
+            - name: bus_sendWorkerPoolSize
+              value: "10"
+            - name: bus_sendQueueSize
+              value: "100"
+            - name: bus_recvWorkerPoolSize
+              value: "10"
+            - name: bus_recvQueueSize
+              value: "100"
+            - name: bus_maxInFlight
+              value: "50"
+
+            # Persistence related properties
+            - name: persistence_db_jndi_datasource
+              value: ""
+            - name: persistence_db_driver
+              value: "org.postgresql.Driver"
+            - name: persistence_db_url
+              value: "jdbc:postgresql://release-name-frost-server-db:5432/sensorthings"
+            - name: persistence_persistenceManagerImplementationClass
+              value: "de.fraunhofer.iosb.ilt.sta.persistence.postgres.longid.PostgresPersistenceManagerLong"
+            - name: persistence_idGenerationMode
+              value: "ServerGeneratedOnly"
+            - name: persistence_alwaysOrderbyId
+              value: "false"
+            - name: persistence_db_conn_max
+              value: "10"
+            - name: persistence_db_conn_idle_max
+              value: "10"
+            - name: persistence_db_conn_idle_min
+              value: "10"
+            - name: persistence_db_username
+              valueFrom:
+                secretKeyRef:
+                  name: release-name-frost-server
+                  key: db.username
+            - name: persistence_db_password
+              valueFrom:
+                secretKeyRef:
+                  name: release-name-frost-server
+                  key: db.password
+---
+# Source: frost-server/templates/http-ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: release-name-frost-server-http
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /FROST-Server/$1
+  labels:
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/instance: release-name
+    helm.sh/chart: frost-server-2.0.3
+    app: frost-server
+    component: http
+spec:
+  rules:
+  - host: frost-server
+    http:
+      paths:
+      - path:  /(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name:  release-name-frost-server-http
+            port:
+              number: 80

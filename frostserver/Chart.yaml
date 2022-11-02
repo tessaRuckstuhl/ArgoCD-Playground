@@ -1,0 +1,6 @@
+apiVersion: v2
+name: frostserver
+description: Helm Chart for Frostserver
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
