@@ -11,3 +11,6 @@ applications:
   - name: tessa-mynginx
     path: nginx
     namespace: default
+  - name: secondnginx
+    path: secondnginx
+    namespace: default
