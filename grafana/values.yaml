@@ -1,0 +1,5 @@
+grafana:
+  image: grafana/grafana:7.5.10
+  gfInstallPlugins: linksmart-sensorthings-datasource 
+  gfPluginsAllowLoadingUnsingedPlugins: linksmart-sensorthings-datasource
+  port: 3000
