@@ -1,3 +1,5 @@
+---
+# Source: postgisdb/templates/postgres-secrets.yml
 apiVersion: v1
 kind: Secret
 metadata:
@@ -6,6 +8,7 @@ type: Opaque
 data:
   password: cG9zdGdyZXMK
 ---
+# Source: postgisdb/templates/postgres-secrets.yml
 kind: PersistentVolume
 apiVersion: v1
 metadata:
@@ -22,6 +25,7 @@ spec:
   hostPath:
     path: "/mnt/data"
 ---
+# Source: postgisdb/templates/postgres-secrets.yml
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
@@ -36,6 +40,21 @@ spec:
     requests:
       storage: 10Mi  # Sets volume size
 ---
+# Source: postgisdb/templates/postgres-secrets.yml
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres # Sets service name
+  labels:
+    app: postgres # Labels and Selectors
+spec:
+  type: NodePort # Sets service type
+  ports:
+    - port: 5432 # Sets port to run the postgres application
+  selector:
+    app: postgres
+---
+# Source: postgisdb/templates/postgres-secrets.yml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -69,16 +88,3 @@ spec:
         - name: postgredb
           persistentVolumeClaim:
             claimName: postgres-pv-claim
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: postgres # Sets service name
-  labels:
-    app: postgres # Labels and Selectors
-spec:
-  type: NodePort # Sets service type
-  ports:
-    - port: 5432 # Sets port to run the postgres application
-  selector:
-    app: postgres
