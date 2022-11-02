@@ -17,3 +17,6 @@ applications:
   - name: postgisdb
     path: postgisdb
     namespace: postgisdb
+  - name: grafana
+    path: grafana
+    namespace: grafana
