@@ -229,7 +229,7 @@ spec:
     spec:
       containers:
         - name: release-name-frost-server-http
-          image: "docker.io/fraunhoferiosb/frost-server-http:2.0.3"
+          image: "fraunhoferiosb/frost-server-http:latest"
           imagePullPolicy: "IfNotPresent"
           ports:
             - name: tomcat
@@ -344,7 +344,7 @@ spec:
     spec:
       containers:
         - name: release-name-frost-server-mqtt
-          image: "docker.io/fraunhoferiosb/frost-server-mqtt:2.0.3"
+          image: "fraunhoferiosb/frost-server-mqtt:latest"
           imagePullPolicy: "IfNotPresent"
           ports:
             - name: mqtt

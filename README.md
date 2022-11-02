@@ -49,3 +49,6 @@ kubectl exec -it postgres-687d5566f9-bxf6j -n postgisdb -- psql -U postgres
 kubectl port-forward svc/postgres 5432:5432 -n postgisdb
 ```
 
+## FROSTSERVER
+
+https://github.com/FraunhoferIOSB/FROST-Server/blob/v2.x/helm/frost-server/README.md
