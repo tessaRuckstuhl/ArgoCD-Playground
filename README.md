@@ -35,3 +35,8 @@ helm template apps/ | kubectl apply -f -
 ```bash
 helm template apps/ | > preview.yaml   
 ```
+
+
+## POSTGIS
+
+https://www.sumologic.com/blog/kubernetes-deploy-postgres/
