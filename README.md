@@ -40,3 +40,12 @@ helm template apps/ | > preview.yaml
 ## POSTGIS
 
 https://www.sumologic.com/blog/kubernetes-deploy-postgres/
+
+```bash
+kubectl exec -it postgres-687d5566f9-bxf6j -n postgisdb -- psql -U postgres
+```
+
+```bash 
+kubectl port-forward svc/postgres 5432:5432 -n postgisdb
+```
+

@@ -1,38 +1,5 @@
-# apiVersion: external-secrets.io/v1beta1
-# kind: ExternalSecret
-# metadata:
-#   name: pw-db-dm-admin
-# spec:
-#   refreshInterval: 1h
-#   secretStoreRef:
-#     kind: ClusterSecretStore
-#     name: kv-main
-#   target:
-#     name: pw-db-dm-admin
-#     creationPolicy: Owner
-#   data:
-#     - secretKey: password
-#       remoteRef:
-#         key: secret/kvs-pw-db-dm-admin
-# ---
-# apiVersion: external-secrets.io/v1beta1
-# kind: ExternalSecret
-# metadata:
-#   name: kvs-pw-grafana-admin
-# spec:
-#   refreshInterval: 1h
-#   secretStoreRef:
-#     kind: ClusterSecretStore
-#     name: kv-main
-#   target:
-#     name: kvs-pw-grafana-admin
-#     creationPolicy: Owner
-#   data:
-#     - secretKey: password
-#       remoteRef:
-#         key: secret/kvs-pw-grafana-admin
-# ---
-apiVersion: v1
+---
+piVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: grafana-pvc
