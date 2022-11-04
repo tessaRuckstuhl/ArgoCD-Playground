@@ -273,13 +273,13 @@ spec:
             - name: bus_sendWorkerPoolSize
               value: "10"
             - name: bus_sendQueueSize
-              value: "100"
+              value: "2000"
             - name: bus_recvWorkerPoolSize
               value: "10"
             - name: bus_recvQueueSize
               value: "100"
             - name: bus_maxInFlight
-              value: "50"
+              value: "2000"
             
 
             # Persistence related properties

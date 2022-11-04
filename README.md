@@ -1,5 +1,21 @@
 # ArgoCD SC
 
+Frost Server
+
+- fraunhoferiosb/frost-server-http (web)
+- fraunhoferiosb/frost-server-mqtt (mqtt)
+- eclipse-mosquitto (mosquitto)
+- postgis/postgis (database)
+
+- dpage/pgadmin4 (pgadmin)
+- node-red
+- grafana
+- simulator
+- geoserver 
+- geoserver_db
+
+
+
 ```bash
 docker run -p 80:80 nginx
 ```
@@ -41,8 +57,9 @@ helm template apps/ | > preview.yaml
 helm pull fraunhoferiosb/frost-server --untar
 ```
 
+# Nginx
 
-## POSTGIS
+# POSTGIS
 
 https://www.sumologic.com/blog/kubernetes-deploy-postgres/
 
@@ -54,6 +71,15 @@ kubectl exec -it postgres-687d5566f9-bxf6j -n postgisdb -- psql -U postgres
 kubectl port-forward svc/postgres 5432:5432 -n postgisdb
 ```
 
-## FROSTSERVER
+# FROSTSERVER
 
 https://github.com/FraunhoferIOSB/FROST-Server/blob/v2.x/helm/frost-server/README.md
+
+## Forward
+```bash
+kubectl port-forward svc/frost-server-frost-server-http 8081:80 -n frostserver 
+```
+
+```bash
+http://localhost:8081/FROST-Server/v1.1
+```

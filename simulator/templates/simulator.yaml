@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{.Values.name}}
+spec:
+  selector:
+    matchLabels:
+      app: {{.Values.name}}
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: {{.Values.name}}
+    spec:
+      containers:
+      - name: {{.Values.name}}
+        image: {{.Values.image}}
+        ports:
+        - containerPort: 8080
+        env: 
+          - name: CLOTHINGCONTAINER
+            value: 0
+          - name: WATERPIPE
+            value: 0
+          - name: SOLARPOWERGRID
+            value: 0
+          - name: BIKE
+            value: 1
+          - name: URL
+            value: http://frost-server:8080/FROST-Server/v1.1
+          - name: LOCATIONASOBSERVATION
+            value: true
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{.Values.name}}
+spec:
+  selector:
+    app: {{.Values.name}}
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
