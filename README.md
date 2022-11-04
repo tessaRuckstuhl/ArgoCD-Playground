@@ -3,20 +3,20 @@
 ```bash
 docker run -p 80:80 nginx
 ```
-
-## Install Argo CD Helm Chart
+# ArgoCD
+## Install ArgCD Helm Chart
 
 ```bash
 helm install argo-cd charts/argo-cd/
 ```
 
-## Accessing the Web UI
+## Accessing ArgoCD Web UI / Dashboard
 
 ```bash
 kubectl port-forward svc/argo-cd-argocd-server 8080:443
 ```
 
-## Get password
+### Get password for Login
 
 Default Username is admin.
 
@@ -31,9 +31,14 @@ kubectl get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | 
 helm template apps/ | kubectl apply -f -   
 ```
 
-
+## Preview 
 ```bash
 helm template apps/ | > preview.yaml   
+```
+
+## Get Template Locally
+```bash
+helm pull fraunhoferiosb/frost-server --untar
 ```
 
 

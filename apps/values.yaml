@@ -11,8 +11,8 @@ applications:
   - name: tessa-mynginx
     path: nginx
     namespace: default
-  - name: frostserver
-    path: frostserver
+  - name: frost-server
+    path: frost-server
     namespace: frostserver
   # - name: postgisdb
   #   path: postgisdb

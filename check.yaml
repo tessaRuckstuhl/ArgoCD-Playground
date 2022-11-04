@@ -229,7 +229,7 @@ spec:
     spec:
       containers:
         - name: release-name-frost-server-http
-          image: "fraunhoferiosb/frost-server-http:latest"
+          image: "docker.io/fraunhoferiosb/frost-server-http:2.0.3"
           imagePullPolicy: "IfNotPresent"
           ports:
             - name: tomcat
@@ -243,7 +243,7 @@ spec:
             - name: ApiVersion
               value: "v1.0"
             - name: serviceRootUrl
-              value: "http://frost-server"
+              value: "http://frost-server:8080/FROST-Server"
             - name: enableActuation
               value: "false"
 
@@ -259,7 +259,7 @@ spec:
             - name: useAbsoluteNavigationLinks
               value: "true"
             - name: http_cors_enable
-              value: "false"
+              value: "true"
 
             # Messages bus related properties
             - name: bus_mqttBroker
@@ -344,7 +344,7 @@ spec:
     spec:
       containers:
         - name: release-name-frost-server-mqtt
-          image: "fraunhoferiosb/frost-server-mqtt:latest"
+          image: "docker.io/fraunhoferiosb/frost-server-mqtt:2.0.3"
           imagePullPolicy: "IfNotPresent"
           ports:
             - name: mqtt
@@ -356,7 +356,7 @@ spec:
             - name: ApiVersion
               value: "v1.0"
             - name: serviceRootUrl
-              value: "http://frost-server"
+              value: "http://frost-server:8080/FROST-Server"
             - name: enableActuation
               value: "false"
 
