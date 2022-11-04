@@ -14,6 +14,9 @@ applications:
   - name: frost-server
     path: frost-server
     namespace: frostserver
+  - name: simulator
+    path: simulator
+    namespace: simulator
   # - name: postgisdb
   #   path: postgisdb
   #   namespace: postgisdb
