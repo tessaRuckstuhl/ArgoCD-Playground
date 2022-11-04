@@ -16,7 +16,7 @@ spec:
       - name: myapp
         image: custom-nginx
         ports:
-        - containerPort: 8081
+        - containerPort: 80
 
 ---
 
@@ -30,4 +30,4 @@ spec:
   ports:
   - port: 80
     protocol: TCP
-    targetPort: 80
+    targetPort: 8081
