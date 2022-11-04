@@ -16,7 +16,7 @@ spec:
       - name: myapp
       # using local image from minikube env
         image: custom-nginx:latest
-        imagePullPolicy: "IfNotPresent"
+        imagePullPolicy: "Never"
 
         ports:
         - containerPort: 80
