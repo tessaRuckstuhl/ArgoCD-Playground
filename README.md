@@ -13,17 +13,28 @@ Frost Server
 - simulator
 - geoserver 
 - geoserver_db
-
+kubecx
 
 
 ```bash
 docker run -p 80:80 nginx
 ```
 # ArgoCD
+
+/charts folder installs Argo CD Helm chart 
+
+/apps/templates/argo-cd.yaml makes sure that Argo CD manages itself (instead of using helm upgrade)
+
+https://www.arthurkoziel.com/setting-up-argocd-with-helm/
 ## Install ArgCD Helm Chart
 
+Run this to get started from scratch... 
 ```bash
 helm install argo-cd charts/argo-cd/
+```
+
+```bash
+helm template apps/ | kubectl apply -f -   
 ```
 
 ## Accessing ArgoCD Web UI / Dashboard
