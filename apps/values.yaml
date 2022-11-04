@@ -17,6 +17,9 @@ applications:
   - name: simulator
     path: simulator
     namespace: simulator
+  - name: angular-webapp
+    path: angular-webapp
+    namespace: angular-webapp
   # - name: postgisdb
   #   path: postgisdb
   #   namespace: postgisdb
