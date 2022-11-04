@@ -94,3 +94,19 @@ kubectl port-forward svc/frost-server-frost-server-http 8081:80 -n frostserver
 ```bash
 http://localhost:8081/FROST-Server/v1.1
 ```
+
+
+# OTHER
+
+## Using custom nginx within minikube locally
+```bash
+eval $(minikube docker-env)
+```
+
+```bash
+docker build ... -t .
+```
+
+```bash
+docker images # images should now be present
+```
