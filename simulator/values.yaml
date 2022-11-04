@@ -1,5 +1,5 @@
 name: iot-device-simulator
 image: 
-  repository: iot-device-simulator
+  repository: simulator-device
   tag: latest
   pullPolicy: Never
