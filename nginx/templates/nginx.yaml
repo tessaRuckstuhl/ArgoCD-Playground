@@ -6,7 +6,7 @@ spec:
   selector:
     matchLabels:
       app: myapp
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -30,7 +30,9 @@ metadata:
 spec:
   selector:
     app: myapp
+  type: NodePort
   ports:
   - port: 80
     protocol: TCP
-    targetPort: 8081
+    targetPort: 80
+    nodePort: 8081
