@@ -8,8 +8,8 @@ applications:
   - name: root
     path: apps/
     namespace: default 
-  - name: tessa-mynginx
-    path: nginx
+  - name: static-website
+    path: static-website
     namespace: default
   - name: frost-server
     path: frost-server
