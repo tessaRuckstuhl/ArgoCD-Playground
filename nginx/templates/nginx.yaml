@@ -14,7 +14,10 @@ spec:
     spec:
       containers:
       - name: myapp
-        image: custom-nginx
+      # using local image from minikube env
+        image: custom-nginx:latest
+        imagePullPolicy: "IfNotPresent"
+
         ports:
         - containerPort: 80
 
