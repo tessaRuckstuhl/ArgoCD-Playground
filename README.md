@@ -19,14 +19,14 @@ kubecx
 ```bash
 docker run -p 80:80 nginx
 ```
-# ArgoCD
+## ArgoCD
 
 /charts folder installs Argo CD Helm chart 
 
 /apps/templates/argo-cd.yaml makes sure that Argo CD manages itself (instead of using helm upgrade)
 
 https://www.arthurkoziel.com/setting-up-argocd-with-helm/
-## Install ArgCD Helm Chart
+### Install ArgCD Helm Chart
 
 Run this to get started from scratch... 
 ```bash
@@ -37,13 +37,13 @@ helm install argo-cd charts/argo-cd/
 helm template apps/ | kubectl apply -f -   
 ```
 
-## Accessing ArgoCD Web UI / Dashboard
+### Accessing ArgoCD Web UI / Dashboard
 
 ```bash
 kubectl port-forward svc/argo-cd-argocd-server 8080:443
 ```
 
-### Get password for Login
+#### Get password for Login
 
 Default Username is admin.
 
@@ -52,7 +52,7 @@ kubectl get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | 
 
 ```
 
-# HELM
+## HELM
 
 ```bash
 helm template apps/ | kubectl apply -f -   
@@ -95,10 +95,13 @@ kubectl port-forward svc/frost-server-frost-server-http 8081:80 -n frostserver
 http://localhost:8081/FROST-Server/v1.1
 ```
 
-
+# Static website
+```bash
+ kubectl port-forward svc/static-website local-port:80
+```
 # OTHER
 
-## Using custom nginx within minikube locally
+## How To: Use local images within minikube
 ```bash
 eval $(minikube docker-env)
 ```
@@ -108,5 +111,5 @@ docker build ... -t .
 ```
 
 ```bash
-docker images # images should now be present
+docker images # image should now be present
 ```

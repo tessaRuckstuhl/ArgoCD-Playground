@@ -20,17 +20,17 @@ spec:
         - containerPort: 8082
         env: 
           - name: CLOTHINGCONTAINER
-            value: 0
+            value: "0"
           - name: WATERPIPE
-            value: 0
+            value: "0"
           - name: SOLARPOWERGRID
-            value: 0
+            value: "0"
           - name: BIKE
-            value: 1
+            value: "1"
           - name: URL
             value: http://frost-server:8080/FROST-Server/v1.1
           - name: LOCATIONASOBSERVATION
-            value: true
+            value: "true"
 
 ---
 
