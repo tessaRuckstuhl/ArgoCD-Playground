@@ -17,7 +17,7 @@ spec:
         image: {{ .Values.image.repository}}:{{.Values.image.tag}}
         imagePullPolicy: {{ .Values.image.pullPolicy}}
         ports:
-        - containerPort: 8082
+        - containerPort: 80
 
 ---
 
@@ -29,6 +29,6 @@ spec:
   selector:
     app: {{.Values.name}}
   ports:
-  - port: 8082
+  - port: 80
     protocol: TCP
     targetPort: 8082
