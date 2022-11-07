@@ -1,5 +1,5 @@
 name: static-website
 image: 
-  repository: custom-nginx
+  repository: static-website
   tag: latest
   pullPolicy: Never
