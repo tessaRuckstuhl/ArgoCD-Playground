@@ -10,10 +10,10 @@ applications:
     namespace: default 
   - name: static-website
     path: static-website
-    namespace: default
+    namespace: static-website
   # - name: frost-server
   #   path: frost-server
-  #   namespace: frostserver
+  #   namespace: frost-server
   - name: simulator
     path: simulator
     namespace: simulator
