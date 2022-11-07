@@ -11,9 +11,9 @@ applications:
   - name: static-website
     path: static-website
     namespace: static-website
-  # - name: frost-server
-  #   path: frost-server
-  #   namespace: frost-server
+  - name: frost-server
+    path: frost-server
+    namespace: frost-server
   - name: simulator
     path: simulator
     namespace: simulator
