@@ -113,3 +113,8 @@ docker build ... -t .
 ```bash
 docker images # image should now be present
 ```
+
+## Enable ingress controller
+```bash
+minikube addons enable ingress
+```
