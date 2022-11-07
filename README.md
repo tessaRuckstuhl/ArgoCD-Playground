@@ -102,7 +102,7 @@ http://localhost:8081/FROST-Server/v1.1
 
 ## Check connection is working
 ```bash
-kubectl exec --stdin --tty static-website-576f89d7c6-blgn9 -n static-website -- /bin/bash
+kubectl exec --stdin --tty angular-webapp-54db9b746f-pb7t8 -n angular-webapp -- /bin/bash
 curl frost-server-frost-server-http.frost-server:80/FROST-Server/v1.1
 ```
 # OTHER
@@ -120,7 +120,15 @@ docker build ... -t .
 docker images # image should now be present
 ```
 
+or 
+```bash
+minikube image load
+```
+
 ## Enable ingress controller (so DNS lookup works of services type ClusterIP)
+!!! Do first, before applying stuff...
+
+https://kubernetes.io/docs/tasks/access-application-cluster/ingress-minikube/
 ```bash
 minikube addons enable ingress
 ```

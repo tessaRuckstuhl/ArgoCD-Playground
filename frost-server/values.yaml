@@ -29,12 +29,12 @@ frost:
       path: /(.*)
     # FROST-Server HTTP deployment resource option. An empty resources field will default to the limits of the namespace. 
     resources:
-      # limits:
-      #   cpu: 1000m
-      #   memory: 1Gi
-      requests:
-        cpu: 500m
+      limits:
+        cpu: 100m
         memory: 1Gi
+      requests:
+        cpu: 50m
+        memory: 500m
 
 
     # FROST-Server HTTP business settings
