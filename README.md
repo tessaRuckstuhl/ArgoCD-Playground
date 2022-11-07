@@ -99,6 +99,12 @@ http://localhost:8081/FROST-Server/v1.1
 ```bash
  kubectl port-forward svc/static-website local-port:80
 ```
+
+## Check connection is working
+```bash
+kubectl exec --stdin --tty static-website-576f89d7c6-blgn9 -n static-website -- /bin/bash
+curl frost-server-frost-server-http.frost-server:80/FROST-Server/v1.1
+```
 # OTHER
 
 ## How To: Use local images within minikube
@@ -114,7 +120,7 @@ docker build ... -t .
 docker images # image should now be present
 ```
 
-## Enable ingress controller
+## Enable ingress controller (so DNS lookup works of services type ClusterIP)
 ```bash
 minikube addons enable ingress
 ```

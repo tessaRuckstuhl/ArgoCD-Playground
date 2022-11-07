@@ -8,15 +8,15 @@ applications:
   - name: root
     path: apps/
     namespace: default 
-  - name: static-website
-    path: static-website
-    namespace: static-website
-  # - name: frost-server
-  #   path: frost-server
-  #   namespace: frost-server
-  - name: simulator
-    path: simulator
-    namespace: simulator
+  # - name: static-website
+  #   path: static-website
+  #   namespace: static-website
+  - name: frost-server
+    path: frost-server
+    namespace: frost-server
+  # - name: simulator
+  #   path: simulator
+  #   namespace: simulator
   - name: angular-webapp
     path: angular-webapp
     namespace: angular-webapp
