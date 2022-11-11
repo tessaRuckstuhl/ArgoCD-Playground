@@ -7,58 +7,57 @@ Frost Server
 - eclipse-mosquitto (mosquitto)
 - postgis/postgis (database)
 
+Other
 - dpage/pgadmin4 (pgadmin)
 - node-red
 - grafana
 - simulator
 - geoserver 
 - geoserver_db
-kubecx
 
+## (Local) Setup ArgoCD apps-of-apps with Helm
 
 ```bash
-docker run -p 80:80 nginx
+# load images into minikube env...
+minikube start 
+eval $(minikube docker-env)
+minikube image load static-website
+minikube image load simulator-device
+minikube image load angular-webapp
+
+# enable ingress for minikube and check it is running - https://kubernetes.io/docs/tasks/access-application-cluster/ingress-minikube/
+
+
+minikube addons enable ingress 
+kubectl get pods -n ingress-nginx
+
+# setup argo-cd with helm
+helm install argo-cd charts/argo-cd/
+helm template apps/ | kubectl apply -f -   
+
+#check if everything is running correcly...
+kubectl get pods -o wide -A
 ```
+
 ## ArgoCD
 
 /charts folder installs Argo CD Helm chart 
 
 /apps/templates/argo-cd.yaml makes sure that Argo CD manages itself (instead of using helm upgrade)
 
-https://www.arthurkoziel.com/setting-up-argocd-with-helm/
-### Install ArgCD Helm Chart
-
-Run this to get started from scratch... 
-```bash
-helm install argo-cd charts/argo-cd/
-```
-
-```bash
-helm template apps/ | kubectl apply -f -   
-```
+ref: https://www.arthurkoziel.com/setting-up-argocd-with-helm/
 
 ### Accessing ArgoCD Web UI / Dashboard
 
 ```bash
+#get password, default username is admin
+kubectl get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+#forward web ui
 kubectl port-forward svc/argo-cd-argocd-server 8080:443
 ```
-
-#### Get password for Login
-
-Default Username is admin.
-
-```bash
-kubectl get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
-
-```
-
 ## HELM
 
-```bash
-helm template apps/ | kubectl apply -f -   
-```
-
-## Preview 
+### Preview 
 ```bash
 helm template apps/ | > preview.yaml   
 ```
@@ -88,7 +87,7 @@ https://github.com/FraunhoferIOSB/FROST-Server/blob/v2.x/helm/frost-server/READM
 
 ## Forward
 ```bash
-kubectl port-forward svc/frost-server-frost-server-http 8081:80 -n frostserver 
+kubectl port-forward svc/frost-server-frost-server-http 8081:80 -n frost-server 
 ```
 
 ```bash
@@ -102,33 +101,10 @@ http://localhost:8081/FROST-Server/v1.1
 
 ## Check connection is working
 ```bash
-kubectl exec --stdin --tty angular-webapp-54db9b746f-pb7t8 -n angular-webapp -- /bin/bash
-curl frost-server-frost-server-http.frost-server:80/FROST-Server/v1.1
-```
-# OTHER
-
-## How To: Use local images within minikube
-```bash
-eval $(minikube docker-env)
+kubectl exec --stdin --tty angular-webapp-76d559f54b-bhbhp -n angular-webapp -- /bin/bash
+curl frost-server-frost-server-http.frost-server:80/FROST-Server/v1.1 -v
 ```
 
 ```bash
-docker build ... -t .
-```
-
-```bash
-docker images # image should now be present
-```
-
-or 
-```bash
-minikube image load
-```
-
-## Enable ingress controller (so DNS lookup works of services type ClusterIP)
-!!! Do first, before applying stuff...
-
-https://kubernetes.io/docs/tasks/access-application-cluster/ingress-minikube/
-```bash
-minikube addons enable ingress
+kubectl port-forward svc/angular-webapp 8082:80 -n angular-webapp
 ```
