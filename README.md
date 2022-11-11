@@ -101,7 +101,7 @@ http://localhost:8081/FROST-Server/v1.1
 
 ## Check connection is working
 ```bash
-kubectl exec --stdin --tty angular-webapp-76d559f54b-bhbhp -n angular-webapp -- /bin/bash
+kubectl exec --stdin --tty angular-webapp-555bd6b457-v8fsm -n angular-webapp -- /bin/bash
 curl frost-server-frost-server-http.frost-server:80/FROST-Server/v1.1 -v
 ```
 
