@@ -1,5 +1,5 @@
 name: angular-webapp
 image: 
   repository: angular-webapp
-  tag: v4
+  tag: v5
   pullPolicy: Never
