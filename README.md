@@ -108,3 +108,9 @@ curl frost-server-frost-server-http.frost-server:80/FROST-Server/v1.1 -v
 ```bash
 kubectl port-forward svc/angular-webapp 8082:80 -n angular-webapp
 ```
+
+
+
+# OPEN QUESTIONS
+- postgis: used by frost-server and geoserver
+- angular-webapp: FROST-API is hardcoded...

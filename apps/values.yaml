@@ -20,6 +20,9 @@ applications:
   - name: angular-webapp
     path: angular-webapp
     namespace: angular-webapp
+  - name: geoserver
+    path: geoserver
+    namespace: geoserver
   # - name: postgisdb
   #   path: postgisdb
   #   namespace: postgisdb

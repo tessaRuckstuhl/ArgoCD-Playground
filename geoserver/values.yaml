@@ -1,4 +1,4 @@
-name: ageoserver
+name: geoserver
 image: 
   repository: geoserver
   tag: latest
