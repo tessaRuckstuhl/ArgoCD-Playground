@@ -23,7 +23,8 @@ minikube start
 eval $(minikube docker-env)
 minikube image load static-website
 minikube image load simulator-device
-minikube image load angular-webapp
+minikube image load angular-webapp:latest
+minikube image load geoserver:latest
 
 # enable ingress for minikube and check it is running - https://kubernetes.io/docs/tasks/access-application-cluster/ingress-minikube/
 
