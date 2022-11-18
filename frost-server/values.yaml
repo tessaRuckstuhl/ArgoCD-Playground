@@ -15,7 +15,7 @@ frost:
       registry: docker.io
       repository: fraunhoferiosb/frost-server-http
       tag: 2.0.3
-      pullPolicy: IfNotPresent
+      pullPolicy: Never
     # FROST-Server HTTP deployment settings
     replicas: 1
     ports:
