@@ -20,7 +20,7 @@ frost:
     replicas: 1
     ports:
       http:
-        nodePort:
+        nodePort: 
         servicePort: 80
     ingress:
       enabled: true
@@ -40,7 +40,7 @@ frost:
     # FROST-Server HTTP business settings
     serviceHost: frost-server
     serviceProtocol: http
-    servicePort: 8080
+    servicePort: 80
     urlSubPath: FROST-Server
     defaultCount: false
     defaultTop: 100
